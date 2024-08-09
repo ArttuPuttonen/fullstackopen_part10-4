@@ -50,31 +50,31 @@ const styles = StyleSheet.create({
   };
   
   const RepositoryItem = ({ item }) => (
-    <View style={styles.container}>
+    <View style={styles.container} testID="repositoryItem">
       <View style={styles.header}>
-        <Image style={styles.avatar} source={{ uri: item.ownerAvatarUrl }} />
+        <Image style={styles.avatar} source={{ uri: item.ownerAvatarUrl }} testID="avatar" />
         <View style={styles.info}>
-          <Text style={{ fontWeight: theme.fontWeights.bold, fontSize: theme.fontSizes.subheading }}>
+          <Text style={{ fontWeight: theme.fontWeights.bold, fontSize: theme.fontSizes.subheading }} testID="fullName">
             {item.fullName}
           </Text>
-          <Text color="textSecondary">{item.description}</Text>
-          <Text style={styles.language}>{item.language}</Text>
+          <Text color="textSecondary" testID="description">{item.description}</Text>
+          <Text style={styles.language} testID="language">{item.language}</Text>
         </View>
       </View>
       <View style={styles.stats}>
-        <View style={styles.statItem}>
+        <View style={styles.statItem} testID="stargazersCount">
           <Text style={styles.statText}>{formatCount(item.stargazersCount)}</Text>
           <Text>Stars</Text>
         </View>
-        <View style={styles.statItem}>
+        <View style={styles.statItem} testID="forksCount">
           <Text style={styles.statText}>{formatCount(item.forksCount)}</Text>
           <Text>Forks</Text>
         </View>
-        <View style={styles.statItem}>
+        <View style={styles.statItem} testID="reviewCount">
           <Text style={styles.statText}>{item.reviewCount}</Text>
           <Text>Reviews</Text>
         </View>
-        <View style={styles.statItem}>
+        <View style={styles.statItem} testID="ratingAverage">
           <Text style={styles.statText}>{item.ratingAverage}</Text>
           <Text>Rating</Text>
         </View>

@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, FlatList, Text } from 'react-native';  
+import { View, FlatList, Text } from 'react-native';
 import { useParams } from 'react-router-native';
 import { useQuery } from '@apollo/client';
 import { GET_REPOSITORY } from '../graphql/queries';
 import RepositoryItem from './RepositoryItem';
-import ReviewItem from './ReviewItem';  
+import ReviewItem from './ReviewItem';
 
 const SingleRepository = () => {
   const { id } = useParams();
@@ -22,10 +22,10 @@ const SingleRepository = () => {
   return (
     <FlatList
       data={reviews}
-      renderItem={({ item }) => <ReviewItem review={item} />}
+      renderItem={({ item }) => <ReviewItem review={item} />} 
       keyExtractor={({ id }) => id}
       ListHeaderComponent={() => (
-        <RepositoryItem item={repository} showGitHubButton />  
+        <RepositoryItem item={repository} showGitHubButton />
       )}
     />
   );

@@ -5,7 +5,7 @@ import { Link } from 'react-router-native';
 import { useQuery } from '@apollo/client';
 import AppBarTab from './AppBarTab';
 import theme from './theme';
-import { GET_ME } from '../graphql/queries';
+import { GET_CURRENT_USER } from '../graphql/queries';
 import useSignOut from '../hooks/useSignOut';
 
 const styles = StyleSheet.create({
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
-  const { data } = useQuery(GET_ME);
+  const { data } = useQuery(GET_CURRENT_USER);
   const signOut = useSignOut();
 
   return (
@@ -32,15 +32,20 @@ const AppBar = () => {
         <Link to="/" component={View}>
           <AppBarTab title="Repositories" />
         </Link>
-        {data?.me ? (
+        {data?.me && (
           <>
             <Link to="/create-review" component={View}>
               <AppBarTab title="Create a Review" />
             </Link>
-            <Link to="/" component={View} onPress={signOut}>
-              <AppBarTab title="Sign Out" />
+            <Link to="/my-reviews" component={View}>
+              <AppBarTab title="My Reviews" />
             </Link>
           </>
+        )}
+        {data?.me ? (
+          <Link to="/" component={View} onPress={signOut}>
+            <AppBarTab title="Sign Out" />
+          </Link>
         ) : (
           <>
             <Link to="/signin" component={View}>

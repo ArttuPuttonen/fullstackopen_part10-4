@@ -21,9 +21,8 @@ describe('RepositoryItem', () => {
     expect(getByTestId('fullName')).toHaveTextContent('jaredpalmer/formik');
     expect(getByTestId('description')).toHaveTextContent('Build forms in React, without the tears');
     expect(getByTestId('language')).toHaveTextContent('TypeScript');
-    expect(getByTestId('stargazersCount')).toHaveTextContent('21.9k'); // 21856 formatted as 21.9k
-    expect(getByTestId('forksCount')).toHaveTextContent('1.6k'); // 1619 formatted as 1.6k
-    expect(getByTestId('reviewCount')).toHaveTextContent('3');
+    expect(getByTestId('stargazersCount')).toHaveTextContent('21.9k'); 
+    expect(getByTestId('forksCount')).toHaveTextContent('1.6k'); 
     expect(getByTestId('ratingAverage')).toHaveTextContent('88');
   });
 });

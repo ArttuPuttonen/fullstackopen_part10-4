@@ -1,32 +1,40 @@
 import React from 'react';
-import { FlatList, View, StyleSheet, Text } from 'react-native';
-import { useQuery } from '@apollo/client';
+import { FlatList, View, Text } from 'react-native';
+import { useQuery, useMutation } from '@apollo/client';
 import { GET_CURRENT_USER } from '../graphql/queries';
+import { DELETE_REVIEW } from '../graphql/mutations';
 import ReviewItem from './ReviewItem';
 
-const styles = StyleSheet.create({
-  separator: {
-    height: 10,
-  },
-});
-
 const MyReviews = () => {
-  const { data, loading, error } = useQuery(GET_CURRENT_USER, {
+  const { data, loading, refetch } = useQuery(GET_CURRENT_USER, {
     variables: { includeReviews: true },
-    fetchPolicy: 'cache-and-network',
   });
 
-  if (loading) return <Text>Loading...</Text>;
-  if (error) return <Text>Error: {error.message}</Text>;
+  const [deleteReview] = useMutation(DELETE_REVIEW);
 
-  const reviews = data?.me?.reviews.edges.map(edge => edge.node) || [];
+  if (loading) {
+    return <Text>Loading...</Text>;
+  }
+
+  const handleDeleteReview = async (id) => {
+    try {
+      await deleteReview({ variables: { id } });
+      refetch();
+    } catch (error) {
+      console.error('Error deleting review:', error);
+    }
+  };
+
+  const reviews = data?.me?.reviews?.edges?.map(edge => edge.node);
 
   return (
     <FlatList
       data={reviews}
-      ItemSeparatorComponent={() => <View style={styles.separator} />}
-      renderItem={({ item }) => <ReviewItem review={item} />}
       keyExtractor={({ id }) => id}
+      renderItem={({ item }) => (
+        <ReviewItem review={item} deleteReview={() => handleDeleteReview(item.id)} />
+      )}
+      ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
     />
   );
 };

@@ -32,6 +32,9 @@ const AppBar = () => {
         <Link to="/" component={View}>
           <AppBarTab title="Repositories" />
         </Link>
+        <Link to="/create-review" component={View}>
+        <AppBarTab title="Create a Review" />
+        </Link>
         {data?.me ? (
           <Link to="/" component={View} onPress={signOut}>
             <AppBarTab title="Sign Out" />

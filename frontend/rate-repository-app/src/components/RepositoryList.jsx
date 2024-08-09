@@ -1,24 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text } from 'react-native';
 import useRepositories from '../hooks/useRepositories';
 import { RepositoryListContainer } from './RepositoryListContainer';
 
 const RepositoryList = () => {
-  const { repositories, loading, error } = useRepositories();
+  const [selectedOrder, setSelectedOrder] = useState('latest');
 
-  if (loading) {
-    return <Text>Loading...</Text>;
-  }
+  const orderBy = selectedOrder === 'highest' ? 'RATING_AVERAGE' : 'CREATED_AT';
+  const orderDirection = selectedOrder === 'lowest' ? 'ASC' : 'DESC';
 
-  if (error) {
-    return <Text>Error: {error.message}</Text>;
-  }
+  const { repositories, loading, error } = useRepositories({ orderBy, orderDirection });
 
-  if (!repositories) {
-    return <Text>No repositories found.</Text>;
-  }
+  if (loading) return <Text>Loading...</Text>;
+  if (error) return <Text>Error: {error.message}</Text>;
 
-  return <RepositoryListContainer repositories={repositories} />;
+  return (
+    <RepositoryListContainer
+      repositories={repositories}
+      selectedOrder={selectedOrder}
+      setSelectedOrder={setSelectedOrder}
+    />
+  );
 };
 
 export default RepositoryList;
